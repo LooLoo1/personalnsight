@@ -3,6 +3,7 @@ export type Choice = {
   nextQuestionId: number;
   value: string | number | boolean;
   template?: string;
+  responseKey?: string;
 };
 
 export type Question = {
@@ -14,15 +15,14 @@ export type Question = {
   choices: Choice[];
   responseKey: string;
 };
+export type QuestionNow = {
+  id: number;
+  type: "question" | "alert";
+};
 
 export type Button =
-  | {
-      type: "Button";
-      text: string;
-      responseKey: string;
-      choices: Choice[];
-    }
-  | { type: "Button"; text: string; link: string };
+  | { type: "Button"; text: string; nextQuestionId: number; link?: string }
+  | { type: "Button"; text: string; nextQuestionId?: number; link: string };
 
 export type Element = {
   type: "Title" | "Description";
@@ -38,4 +38,4 @@ export type Alert = {
   structure: AlertStructure;
 };
 
-export type QuestionsSchema = (Question | Alert)[];
+export type QuestionsSchema = Question | Alert;

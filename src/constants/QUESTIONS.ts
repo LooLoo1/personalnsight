@@ -1,6 +1,6 @@
 import { QuestionsSchema } from "./types";
 
-export const QUESTIONS: QuestionsSchema = [
+export const QUESTIONS: QuestionsSchema[] = [
   {
     id: 1,
     title: "Select your gender:",
@@ -235,15 +235,7 @@ export const QUESTIONS: QuestionsSchema = [
       {
         type: "Button",
         text: "Next",
-        responseKey: "Overthink",
-        choices: [
-          { text: "Yes", nextQuestionId: 7, value: "Yes" },
-          {
-            text: "No",
-            nextQuestionId: 10,
-            value: "No",
-          },
-        ],
+        nextQuestionId: 7,
       },
     ],
   },

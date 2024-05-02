@@ -29,6 +29,9 @@ const config: Config = {
         white: "2px 2px 6px rgba(255, 255, 255, 0.25)",
         white2x: "2px 2px 12px rgba(255, 255, 255, 0.5)",
       },
+      minHeight: {
+        inherit: "inherit",
+      },
     },
   },
   plugins: [],

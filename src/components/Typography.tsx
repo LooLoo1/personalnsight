@@ -1,13 +1,13 @@
 import { ComponentPropsWithoutRef } from "react";
 
 const styles: Record<"alert" | "normal", string> = {
-  normal: `text-base p-5 text-blackGray bg-lightGray rounded-2xl shadow-purple transition-all 
-          hover:text-white hover:bg-transparent 
+  normal: `w-full text-base p-5 text-blackGray bg-lightGray rounded-2xl shadow-purple transition-all 
+          hover:text-white hover:bg-transparent focus-visible:text-white focus-visible:bg-transparent
 
-          relative overflow-hidden after:transition-all z-10
-          after:content-[''] after:pointer-events-none after:opacity-0 hover:after:opacity-100 after:absolute after:inset-0 after:bg-gradient-purple after:z-[-1]`,
+          relative overflow-hidden after:transition-all z-10 disabled:grayscale disabled:opacity-50
+          after:content-[''] after:pointer-events-none after:opacity-0 hover:after:opacity-100 focus-visible:after:opacity-100 after:absolute after:inset-0 after:bg-gradient-purple after:z-[-1]`,
 
-  alert: `text-lg p-5 text-purple bg-white rounded-2xl shadow-white transition-all hover:shadow-white2x`,
+  alert: `text-lg p-5 text-purple bg-white rounded-2xl shadow-white transition-all hover:shadow-white2x focus-visible:shadow-white2x`,
 };
 
 export const Typography = {
@@ -34,7 +34,7 @@ export const Typography = {
     ...rest
   }: {
     children: React.ReactNode;
-    state: "alert" | "normal";
+    state?: "alert" | "normal";
     onClick?: () => void;
   } & ComponentPropsWithoutRef<"button">) => (
     <button className={styles[state]} onClick={onClick} {...rest}>
