@@ -1,13 +1,14 @@
-import { Inter } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const openSans = Open_Sans({ subsets: ["latin"] });
 
 export default function Home() {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen flex-col items-center justify-between p-24 ${openSans.className}`}
     >
-      Test
+      <h1 className="font-bold">Personalnsight</h1>
+      <p>Welcome</p>
     </main>
   );
 }
