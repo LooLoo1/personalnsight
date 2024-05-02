@@ -1,12 +1,21 @@
-import { Open_Sans } from "next/font/google";
+import { Typography } from "components/Typography";
 
-const openSans = Open_Sans({ subsets: ["latin"] });
+const { Title, Description, Button } = Typography;
 
 export default function Home() {
   return (
-    <main className={`flex min-h-screen flex-col p-24 ${openSans.className}`}>
-      <h1 className="font-bold">Personalnsight</h1>
-      <p>Welcome</p>
-    </main>
+    <section className="flex w-96 my-5 flex-col p-2 mx-auto gap-8 group alert">
+      <Title>Discover Your Relationship Astrology</Title>
+
+      <Description>
+        Take our survey to uncover personalized insights into your relationships
+        based on astrology. We&apos;ll guide you through a series of questions
+        to tailor-make your astrological profile. Understanding your
+        astrological blueprint can revolutionize your approach to relationships.
+        Let&apos;s explore together!
+      </Description>
+
+      <Button state="alert">Start Now</Button>
+    </section>
   );
 }

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const questionnaireSlice = createSlice({
   name: "questionnaire",
-  initialState: [],
+  initialState: {},
   reducers: {},
 });
 
