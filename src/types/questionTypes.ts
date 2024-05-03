@@ -1,5 +1,3 @@
-// ! трох хз що то ха типи але бажано їх рзбити
-
 export type Choice = {
   id?: number;
   text: string;

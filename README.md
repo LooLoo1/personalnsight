@@ -1,40 +1,114 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+<div style="display:flex; justify-content: center; width: 50px; height: 50px;"><img src="./public/svg/Logo.svg"/></div>
 
-First, run the development server:
+## Launching the questionnaire
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Cloning the repository: [Demo]()
+The first step is to clone the project repository to your computer. You can do this with a command:
+```shell
+https://github.com/LooLoo1/personalnsight.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies:
+After cloning the repository, navigate to its root folder and install all necessary dependencies using the command:
+```
+npm install
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### 3. Starting a project
+#### 3.1 Run the project in development mode: 
+```
+npm run dev
+```
+#### 3.2 Open a browser and go to [http://localhost:3000](http://localhost:3000).
+#### 3.3 To run in production mode:
+```
+npm run build && npm run start
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 4. Production build
+![[RedmePoster.png]]
+### 5. Flexible approach to question structure:
+I have developed a flexible approach to question structure that allows for a variable graph structure. This means that the order of the questions and the logic of the transition between them can be customized depending on the user's answers. Question headings are automatically generated based on previous answers, making the questionnaire more dynamic and personalized.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```ts
+export type Choice = {
+  id?: number;
+  text: string;
+  nextQuestionId: number;
+  value: string | number | boolean;
+  template?: string;
+  responseKey?: string;
+};
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+export type Question = {
+  id: number;
+  title: string;
+  description?: string;
+  type: "question";
+  defaultNext: number;
+  choices: Choice[];
+  responseKey: string;
+};
 
-## Learn More
+export type QuestionNow = {
+  id: number;
+  type: "question" | "alert";
+};
 
-To learn more about Next.js, take a look at the following resources:
+export type Button = {
+  type: "Button";
+  text: string;
+  nextQuestionId?: number;
+  link?: string;
+};
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+export type Element = {
+  type: "Title" | "Description";
+  text: string;
+};
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+export type AlertStructure = (Element | Button)[];
 
+export type Alert = {
+  id: number;
+  type: "alert";
+  defaultNext?: number;
+  structure: AlertStructure;
+};
+
+export type QuestionsSchema = Question | Alert;
+```
+### 6. Modular project architecture:
+I chose a simple modular architecture for this project to make it more flexible and extensible. This means that the different parts of the project (questions, transition logic, response storage) are divided into separate modules, which makes it easier to modify them and add new features.
+
+### 7. Simulation of asynchronous requests:
+Since this is a test case, I did not write a back-end for the project. Instead, I simulated asynchronous requests using procs. This allows me to test the logic of the questionnaire without having a real server.
+
+---
+
+## Requirements:
+
+### Front-end:
+- Using Next.js to create pages.
+- Pages should be responsive to mobile and desktop devices (no need to adapt to tablets).
+- The number of pages should correspond to the number of screens with questions.
+- Pages are generated using Next.js getStaticPaths.
+- Storing user responses in the state manager.
+- The questionnaire configuration (questions, answers, transition logic) should be stored in a separate JSON or TS file.
+- The configuration should be extensible: the ability to add/change question types, number of answer options, etc.
+### Technologies:
+- TypeScript
+- Next.js
+- Redux or other state manager
+- ESLint
+- Prettier
+### General requirements:
+- The repository with the project must be public on GitHub/GitLab/Bitbucket.
+- Launch the project using the npm build && npm start command.
+- Availability of README.md file with launch instructions for dev and production environments.
+
+---
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform]() from the creators of Next.js.
