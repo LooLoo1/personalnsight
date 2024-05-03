@@ -3,7 +3,7 @@
 
 ## Launching the questionnaire
 
-### 1. Cloning the repository: [Demo]()
+### 1. Cloning the repository: [Demo](https://personalnsight-git-main-looloo1s-projects.vercel.app)
 The first step is to clone the project repository to your computer. You can do this with a command:
 ```shell
 https://github.com/LooLoo1/personalnsight.git
@@ -111,4 +111,4 @@ Since this is a test case, I did not write a back-end for the project. Instead, 
 ---
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform]() from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://personalnsight-git-main-looloo1s-projects.vercel.app) from the creators of Next.js.
