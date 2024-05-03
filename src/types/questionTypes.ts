@@ -1,6 +1,7 @@
 // ! трох хз що то ха типи але бажано їх рзбити
 
 export type Choice = {
+  id?: number;
   text: string;
   nextQuestionId: number;
   value: string | number | boolean;
@@ -22,9 +23,12 @@ export type QuestionNow = {
   type: "question" | "alert";
 };
 
-export type Button =
-  | { type: "Button"; text: string; nextQuestionId: number; link?: string }
-  | { type: "Button"; text: string; nextQuestionId?: number; link: string };
+export type Button = {
+  type: "Button";
+  text: string;
+  nextQuestionId?: number;
+  link?: string;
+};
 
 export type Element = {
   type: "Title" | "Description";

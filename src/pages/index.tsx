@@ -2,17 +2,18 @@ import { Button, Description, Title } from "components";
 import { useDispatch, useSelector } from "hooks";
 import { Layout } from "layouts";
 import { useRouter } from "next/router";
+
 import { startSurvey } from "store";
 
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { schema, inProcess, questionNow } = useSelector(
+  const { schema, inProcess, questionNow, sucsessQuestionnaire } = useSelector(
     ({ questionnaire }) => questionnaire,
   );
 
-  if (inProcess) {
+  if (inProcess && !sucsessQuestionnaire) {
     router.replace(`/questionnaire/${questionNow}`);
   }
 
