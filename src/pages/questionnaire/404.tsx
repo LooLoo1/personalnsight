@@ -1,13 +1,14 @@
-export async function getStaticProps() {
-  return {
-    redirect: {
-      permanent: false,
-      destination: "/",
-    },
-  };
-}
+import { useIsWindow } from "hooks";
+import { useRouter } from "next/router";
 
 const QuestionnaireNotFoundPage = () => {
+  const router = useRouter();
+
+  useIsWindow(() => {
+    setTimeout(() => {
+      router.push("/");
+    }, 0);
+  });
   return <></>;
 };
 
