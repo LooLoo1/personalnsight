@@ -1,5 +1,7 @@
 
-<div style="display:flex; justify-content: center; width: 50px; height: 50px;"><img src="./public/svg/Logo.svg"/></div>
+<p align="center" border="50%" background="white" padding="15">
+	<img alt="Tailwind CSS" src="./public/svg/Logo.svg" width="70" height="70" style="max-width: 100%;"/>
+</p>
 
 ## Launching the questionnaire
 
