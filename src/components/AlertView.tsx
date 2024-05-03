@@ -1,5 +1,6 @@
 import { Button, Description, Header, Title } from "components";
 import { useDispatch } from "hooks";
+import Head from "next/head";
 import Link from "next/link";
 import { clearAnswers, endSurvey } from "store";
 import { Alert, Choice } from "types";
@@ -25,9 +26,14 @@ export const AlertView = ({
         {structure.map((element) => {
           if (element.type === "Title") {
             return (
-              <Title state="alert" key={element.text}>
-                {element.text}
-              </Title>
+              <>
+                <Head>
+                  <title>Alert: {element.text}</title>
+                </Head>
+                <Title state="alert" key={element.text}>
+                  {element.text}
+                </Title>
+              </>
             );
           }
           if (element.type === "Description") {

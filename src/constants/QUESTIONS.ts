@@ -7,8 +7,13 @@ export const QUESTIONS: QuestionsSchema[] = [
     defaultNext: 2,
     type: "question",
     choices: [
-      { text: "Female", nextQuestionId: 2, value: "Female" },
-      { text: "Male", nextQuestionId: 2, value: "Male" },
+      {
+        text: "Female",
+        nextQuestionId: 2,
+        value: "Female",
+        template: "Female",
+      },
+      { text: "Male", nextQuestionId: 2, value: "Male", template: "Male" },
     ],
     responseKey: "Gender",
   },

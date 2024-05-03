@@ -21,7 +21,8 @@
       "store": ["./src/store"],
       "public": ["./src/public/*"],
       "types": ["./src/types"],
-      "layouts": ["./src/layouts"]
+      "layouts": ["./src/layouts"],
+      "helpers": ["./src/helpers"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
