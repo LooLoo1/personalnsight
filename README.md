@@ -29,7 +29,7 @@ npm run build && npm run start
 
 ### 4. Production build
 <p align="center">
-<img alt="Logs" src="./public/RedmePoster.png" width="350" height="40" style="max-width: 100%;"/>
+<img alt="Logs" src="./public/RedmePoster.png" width="350" height="295" style="max-width: 100%;"/>
 </p>
 
 ### 5. Flexible approach to question structure:
