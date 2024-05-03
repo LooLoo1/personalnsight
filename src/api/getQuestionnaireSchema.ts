@@ -1,4 +1,4 @@
-import { QUESTIONS } from "fixed";
+import { QUESTIONS } from "constants/questions";
 import { QuestionsSchema } from "types";
 
 export const getQuestionnaireSchema = async (): Promise<QuestionsSchema[]> => {
