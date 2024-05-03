@@ -1,5 +1,6 @@
+import { postAnswers } from "api";
 import { Button, Description, Header, Title } from "components";
-import { useDispatch } from "hooks";
+import { useDispatch, useSelector } from "hooks";
 import Head from "next/head";
 import Link from "next/link";
 import { clearAnswers, endSurvey } from "store";
@@ -16,6 +17,31 @@ export const AlertView = ({
 }) => {
   const { defaultNext, structure } = question;
   const dispatch = useDispatch();
+  const answers = useSelector(({ questionnaire }) => questionnaire.answers);
+
+  const handleSurveyCompletion = () => {
+    dispatch(endSurvey());
+    dispatch(clearAnswers());
+    postAnswers(answers); // Set data to server
+    localStorage.removeItem("questionnaire");
+  };
+
+  const finishHandler = (
+    nextQuestionId: number | undefined,
+    defaultNext: number | undefined,
+  ) => {
+    const hasExplicitNextQuestion = nextQuestionId !== undefined;
+    const hasDefaultNextQuestion = defaultNext !== undefined;
+
+    if (hasExplicitNextQuestion || hasDefaultNextQuestion) {
+      const chosenNextQuestion = hasExplicitNextQuestion
+        ? nextQuestionId
+        : defaultNext;
+      nextQuestionHandler(chosenNextQuestion as number);
+    } else {
+      handleSurveyCompletion();
+    }
+  };
 
   return (
     <div className="w-full h-screen bg-gradient-purple">
@@ -46,21 +72,11 @@ export const AlertView = ({
           if (element.type === "Button") {
             const { text, nextQuestionId, link } = element;
 
-            const finishHandler = () => {
-              if (nextQuestionId || defaultNext) {
-                nextQuestionHandler((nextQuestionId || defaultNext) as number);
-              } else {
-                dispatch(endSurvey());
-                dispatch(clearAnswers());
-                localStorage.removeItem("questionnaire");
-              }
-            };
-
             return (
               <Link key={text} href={link ?? `/questionnaire/${defaultNext}`}>
                 <Button
                   state="alert"
-                  onClick={finishHandler}
+                  onClick={() => finishHandler(nextQuestionId, defaultNext)}
                   disabled={!inProcess}
                 >
                   {text}

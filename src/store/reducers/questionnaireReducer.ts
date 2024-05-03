@@ -36,6 +36,7 @@ const questionnaireSlice = createSlice({
       state.inProcess = false;
       state.questionNow = undefined;
       state.sucsessQuestionnaire = true;
+      state.answers = [];
     },
 
     setInProgressData(state, action: PayloadAction<InitialState>) {

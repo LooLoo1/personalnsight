@@ -17,13 +17,6 @@ export const RootLayout = ({ children }: { children: React.ReactNode }) => {
           sizes="any"
           type="image/svg+xml"
         />
-
-        {/* <link
-          rel="icon"
-          href="/favicon.ico"
-          type="image/x-icon"
-          sizes="48x48"
-        /> */}
         <meta name="theme-color" content="#6A3AA2" />
       </Head>
       <main
