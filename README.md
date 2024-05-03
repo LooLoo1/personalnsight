@@ -1,6 +1,5 @@
-
 <p align="center" border="50%" background="white" padding="15">
-	<img alt="Tailwind CSS" src="./public/svg/Logo.svg" width="70" height="70" style="max-width: 100%;"/>
+	<img alt="Logo" src="./public/svg/Logo.svg" width="70" height="70" style="max-width: 100%;"/>
 </p>
 
 ## Launching the questionnaire
@@ -29,7 +28,10 @@ npm run build && npm run start
 ```
 
 ### 4. Production build
-![[RedmePoster.png]]
+<p align="center">
+<img alt="Logs" src="./public/RedmePoster.png" width="350" height="40" style="max-width: 100%;"/>
+</p>
+
 ### 5. Flexible approach to question structure:
 I have developed a flexible approach to question structure that allows for a variable graph structure. This means that the order of the questions and the logic of the transition between them can be customized depending on the user's answers. Question headings are automatically generated based on previous answers, making the questionnaire more dynamic and personalized.
 
