@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Choice, QuestionsSchema } from "constants/types";
+import { Choice, QuestionsSchema } from "types";
 import { fetchQuestionnaireSchema } from "./thunks";
 
 type InitialState = {

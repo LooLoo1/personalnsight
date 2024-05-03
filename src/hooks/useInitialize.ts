@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "hooks/useRedux";
+import { useDispatch, useSelector } from "hooks";
 import { useEffect } from "react";
-import { setInProgressData } from "store/reducers/questionnaireReducer";
-import { fetchQuestionnaireSchema } from "store/reducers/thunks";
+import { fetchQuestionnaireSchema, setInProgressData } from "store";
 
 export const useInitialize = () => {
   const dispatch = useDispatch();

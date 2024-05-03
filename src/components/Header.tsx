@@ -1,9 +1,9 @@
-import { useSelector } from "hooks/useRedux";
+import { useSelector } from "hooks";
 import Image from "next/image";
+import Arrow from "public/svg/Arrow.svg";
+import Logo from "public/svg/Logo.svg";
 import { ComponentPropsWithoutRef } from "react";
 import { twMerge } from "tailwind-merge";
-import Arrow from "../../public/Arrow.svg";
-import Logo from "../../public/Logo.svg";
 
 export const Header = ({ className }: ComponentPropsWithoutRef<"header">) => {
   const inProcess = useSelector(({ questionnaire }) => questionnaire.inProcess);

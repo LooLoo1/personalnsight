@@ -1,17 +1,16 @@
-import { Layout } from "components/Layout";
-import { Typography } from "components/Typography";
-import { useDispatch, useSelector } from "hooks/useRedux";
+import { Button, Description, Title } from "components";
+import { useDispatch, useSelector } from "hooks";
+import { Layout } from "layouts";
 import { useRouter } from "next/router";
-import { startSurvey } from "store/reducers/questionnaireReducer";
-
-const { Title, Description, Button } = Typography;
+import { startSurvey } from "store";
 
 export default function Home() {
+  const router = useRouter();
   const dispatch = useDispatch();
+
   const { schema, inProcess, questionNow } = useSelector(
     ({ questionnaire }) => questionnaire,
   );
-  const router = useRouter();
 
   if (inProcess) {
     router.replace(`/questionnaire/${questionNow}`);

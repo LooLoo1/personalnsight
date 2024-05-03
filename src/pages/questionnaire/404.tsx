@@ -1,8 +1,13 @@
-import { useRouter } from "next/router";
+export async function getStaticProps() {
+  return {
+    redirect: {
+      permanent: false,
+      destination: "/",
+    },
+  };
+}
 
 const QuestionnaireNotFoundPage = () => {
-  const router = useRouter();
-  router.push("/");
   return <></>;
 };
 

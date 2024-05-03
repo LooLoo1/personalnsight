@@ -1,4 +1,4 @@
-import { QuestionsSchema } from "./types";
+import { QuestionsSchema } from "types";
 
 export const QUESTIONS: QuestionsSchema[] = [
   {

@@ -12,12 +12,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
-      "components/*": ["./src/components/*"],
-      "api/*": ["./src/api/*"],
-      "hooks/*": ["./src/store/hooks/*", "./src/hooks/*"],
-      "constants/*": ["./src/constants/*"],
-      "store/*": ["./src/store/*"]
+      "components": ["./src/components"],
+      "api": ["./src/api"],
+      "defined": ["./src/constants"],
+      "hooks": ["./src/hooks"],
+      "store": ["./src/store"],
+      "public": ["./src/public/*"],
+      "types": ["./src/types"],
+      "layouts": ["./src/layouts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -1,14 +1,12 @@
 import { ComponentPropsWithoutRef } from "react";
-import { Header } from "./Header";
 import { twMerge } from "tailwind-merge";
+import { Header } from "components";
 
-export const Layout = ({
-  children,
-  className,
-  ...rest
-}: {
+type LayoutProps = ComponentPropsWithoutRef<"div"> & {
   children: React.ReactNode;
-} & ComponentPropsWithoutRef<"div">) => {
+};
+
+export const Layout = ({ children, className, ...rest }: LayoutProps) => {
   return (
     <div
       className={twMerge(`bg-lightPinkLavender min-h-screen`, className)}

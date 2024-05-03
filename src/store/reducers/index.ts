@@ -1,9 +1,3 @@
-import questionnaireReducer from "./questionnaireReducer";
-
-import { combineReducers } from "redux";
-
-const rootReducer = combineReducers({
-  questionnaire: questionnaireReducer,
-});
-
-export default rootReducer;
+export * from "./questionnaireReducer";
+export * from "./rootReducer";
+export * from "./thunks";

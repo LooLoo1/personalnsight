@@ -3,14 +3,15 @@ import { useEffect } from "react";
 
 const QuestionnairePage = () => {
   const router = useRouter();
+  const isWindow = typeof window !== "undefined"
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (isWindow) {
       setTimeout(() => {
         router.push("/");
       }, 2000);
     }
-  }, [router]);
+  }, [router, isWindow]);
 
   return <>Nice try :D</>;
 };
