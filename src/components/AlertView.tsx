@@ -3,10 +3,11 @@ import { Button, Description, Header, Title } from "components";
 import { useDispatch, useSelector } from "hooks";
 import Head from "next/head";
 import Link from "next/link";
+import { Fragment, memo } from "react";
 import { clearAnswers, endSurvey } from "store";
 import { Alert, Choice } from "types";
 
-export const AlertView = ({
+export const AlertView = memo(function AlertView({
   inProcess,
   question,
   nextQuestionHandler,
@@ -14,7 +15,7 @@ export const AlertView = ({
   inProcess: boolean;
   question: Alert;
   nextQuestionHandler: (nextQuestionId: number, choice?: Choice) => void;
-}) => {
+}) {
   const { defaultNext, structure } = question;
   const dispatch = useDispatch();
   const answers = useSelector(({ questionnaire }) => questionnaire.answers);
@@ -52,14 +53,14 @@ export const AlertView = ({
         {structure.map((element) => {
           if (element.type === "Title") {
             return (
-              <>
+              <Fragment key={element.text}>
                 <Head>
                   <title>Alert: {element.text}</title>
                 </Head>
                 <Title state="alert" key={element.text}>
                   {element.text}
                 </Title>
-              </>
+              </Fragment>
             );
           }
           if (element.type === "Description") {
@@ -88,4 +89,4 @@ export const AlertView = ({
       </section>
     </div>
   );
-};
+});
