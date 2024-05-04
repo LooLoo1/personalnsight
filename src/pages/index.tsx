@@ -19,7 +19,7 @@ export default function Home() {
 
   const startTestHandler = () => {
     dispatch(startSurvey());
-    router.push(`/questionnaire/${questionNow || schema[0].id}`);
+    router.push(`/questionnaire/${questionNow || schema![0].id}`);
   };
 
   return (
@@ -35,7 +35,8 @@ export default function Home() {
           approach to relationships. Let&apos;s explore together!
         </Description>
 
-        <Button onClick={startTestHandler}>Start Now</Button>
+        {schema && <Button onClick={startTestHandler}>Start Now</Button>}
+        {!schema && <Button disabled>Loading...</Button>}
       </section>
     </Layout>
   );

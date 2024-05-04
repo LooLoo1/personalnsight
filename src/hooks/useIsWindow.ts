@@ -1,5 +1,7 @@
+import { isWindow } from "helpers";
+
 export const useIsWindow = (callback?: () => void): { isWindow: boolean } => {
-  const isWindow = typeof window !== "undefined";
-  if (isWindow && callback) callback();
-  return { isWindow };
+  const windowState = isWindow();
+  if (windowState && callback) callback();
+  return { isWindow: windowState };
 };
