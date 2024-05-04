@@ -1,4 +1,4 @@
-import { postAnswers } from "api";
+import { postQuestionnaireSchema } from "api";
 import { Button, Description, Header, Title } from "components";
 import { useDispatch, useSelector } from "hooks";
 import Head from "next/head";
@@ -22,7 +22,7 @@ export const AlertView = ({
   const handleSurveyCompletion = () => {
     dispatch(endSurvey());
     dispatch(clearAnswers());
-    postAnswers(answers); // Set data to server
+    postQuestionnaireSchema(answers);
     localStorage.removeItem("questionnaire");
   };
 

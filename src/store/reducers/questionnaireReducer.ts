@@ -8,7 +8,7 @@ export type InitialState = {
   questionNow: number | string | undefined;
   loading: boolean;
   error: string | undefined;
-  schema: QuestionsSchema[];
+  schema: QuestionsSchema[] | undefined;
   answers: Choice[];
 };
 
@@ -18,7 +18,7 @@ const initialState: InitialState = {
   questionNow: undefined,
   loading: false,
   error: undefined,
-  schema: [],
+  schema: undefined,
   answers: [],
 };
 
@@ -27,9 +27,9 @@ const questionnaireSlice = createSlice({
   initialState,
   reducers: {
     startSurvey(state) {
-      if (state.schema.length > 0) {
+      if (state.schema!.length > 0) {
         state.inProcess = true;
-        state.questionNow = state.schema[0].id;
+        state.questionNow = state.schema![0].id;
       }
     },
     endSurvey(state) {

@@ -16,7 +16,7 @@
     "paths": {
       "components": ["./src/components"],
       "api": ["./src/api"],
-      "defined": ["./src/constants"],
+      "defined": ["./src/defined"],
       "hooks": ["./src/hooks"],
       "store": ["./src/store"],
       "public": ["./src/public/*"],

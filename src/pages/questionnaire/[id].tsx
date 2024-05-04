@@ -16,10 +16,11 @@ const QuestionPage = ({
   const { inProcess, questionNow } = useSelector(
     ({ questionnaire }) => questionnaire,
   );
-  const { id, type } = question;
   const dispatch = useDispatch();
   const router = useRouter();
   const store = useSelector(({ questionnaire }) => questionnaire);
+
+  const { id, type } = question;
 
   const { isWindow } = useIsWindow(() => {
     if (inProcess && id !== questionNow) {
@@ -83,7 +84,6 @@ export const getStaticPaths = (async () => {
 export const getStaticProps = (async (context) => {
   const res = await getQuestionnaireSchema();
   const question = res.filter(({ id }) => id === Number(context.params?.id))[0];
-
   return {
     props: { question },
   };
