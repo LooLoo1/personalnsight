@@ -1,11 +1,11 @@
-import { postQuestionnaireSchema } from "api";
-import { Button, Description, Header, Title } from "components";
-import { useDispatch, useSelector } from "hooks";
-import Head from "next/head";
-import Link from "next/link";
-import { Fragment, memo } from "react";
-import { clearAnswers, endSurvey } from "store";
-import { Alert, Choice } from "types";
+import { postQuestionnaireSchema } from 'api';
+import { Button, Description, Header, Title } from 'components';
+import { useDispatch, useSelector } from 'hooks';
+import Head from 'next/head';
+import Link from 'next/link';
+import { Fragment, memo } from 'react';
+import { clearAnswers, endSurvey } from 'store';
+import { Alert, Choice } from 'types';
 
 export const AlertView = memo(function AlertView({
   inProcess,
@@ -24,20 +24,15 @@ export const AlertView = memo(function AlertView({
     dispatch(endSurvey());
     dispatch(clearAnswers());
     postQuestionnaireSchema(answers);
-    localStorage.removeItem("questionnaire");
+    localStorage.removeItem('questionnaire');
   };
 
-  const finishHandler = (
-    nextQuestionId: number | undefined,
-    defaultNext: number | undefined,
-  ) => {
+  const finishHandler = (nextQuestionId: number | undefined, defaultNext: number | undefined) => {
     const hasExplicitNextQuestion = nextQuestionId !== undefined;
     const hasDefaultNextQuestion = defaultNext !== undefined;
 
     if (hasExplicitNextQuestion || hasDefaultNextQuestion) {
-      const chosenNextQuestion = hasExplicitNextQuestion
-        ? nextQuestionId
-        : defaultNext;
+      const chosenNextQuestion = hasExplicitNextQuestion ? nextQuestionId : defaultNext;
       nextQuestionHandler(chosenNextQuestion as number);
     } else {
       handleSurveyCompletion();
@@ -47,11 +42,9 @@ export const AlertView = memo(function AlertView({
   return (
     <div className="w-full h-screen bg-gradient-purple">
       <Header className="invert" />
-      <section
-        className={`flex max-w-96 w-full my-5 flex-col lg:p-2 p-5 mx-auto gap-5 pb-16`}
-      >
+      <section className={`flex max-w-96 w-full my-5 flex-col lg:p-2 p-5 mx-auto gap-5 pb-16`}>
         {structure.map((element) => {
-          if (element.type === "Title") {
+          if (element.type === 'Title') {
             return (
               <Fragment key={element.text}>
                 <Head>
@@ -63,23 +56,19 @@ export const AlertView = memo(function AlertView({
               </Fragment>
             );
           }
-          if (element.type === "Description") {
+          if (element.type === 'Description') {
             return (
               <Description state="alert" key={element.text}>
                 {element.text}
               </Description>
             );
           }
-          if (element.type === "Button") {
+          if (element.type === 'Button') {
             const { text, nextQuestionId, link } = element;
 
             return (
               <Link key={text} href={link ?? `/questionnaire/${defaultNext}`}>
-                <Button
-                  state="alert"
-                  onClick={() => finishHandler(nextQuestionId, defaultNext)}
-                  disabled={!inProcess}
-                >
+                <Button state="alert" onClick={() => finishHandler(nextQuestionId, defaultNext)} disabled={!inProcess}>
                   {text}
                 </Button>
               </Link>
