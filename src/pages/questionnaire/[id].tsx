@@ -1,5 +1,6 @@
 import { getQuestionnaireSchema } from "api";
 import { AlertView, QuestionView } from "components";
+import { isWindow } from "helpers";
 import { useDispatch, useIsWindow, useSelector } from "hooks";
 import type {
   GetStaticPaths,
@@ -7,6 +8,7 @@ import type {
   InferGetStaticPropsType,
 } from "next";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
 import { nextQuestion, setAnswer } from "store";
 import { Choice, QuestionsSchema } from "types";
 
@@ -22,7 +24,7 @@ const QuestionPage = ({
 
   const { id, type } = question;
 
-  const { isWindow } = useIsWindow(() => {
+  useIsWindow(() => {
     if (inProcess && id !== questionNow) {
       router.push(`/questionnaire/${questionNow}`);
     }
@@ -31,16 +33,19 @@ const QuestionPage = ({
     }
   });
 
-  const nextQuestionHandler = (nextQuestionId: number, choice?: Choice) => {
-    dispatch(nextQuestion(nextQuestionId));
-    if (choice) dispatch(setAnswer(choice));
-    if (isWindow) {
-      localStorage.setItem(
-        "questionnaire",
-        JSON.stringify({ ...store, answers: [...store.answers, choice] }),
-      );
-    }
-  };
+  const nextQuestionHandler = useCallback(
+    (nextQuestionId: number, choice?: Choice) => {
+      dispatch(nextQuestion(nextQuestionId));
+      if (choice) dispatch(setAnswer(choice));
+      if (isWindow()) {
+        localStorage.setItem(
+          "questionnaire",
+          JSON.stringify({ ...store, answers: [...store.answers, choice] }),
+        );
+      }
+    },
+    [dispatch, store],
+  );
 
   if (type === "question") {
     return (

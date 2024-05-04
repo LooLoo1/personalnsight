@@ -3,9 +3,10 @@ import { replaceTitle } from "helpers";
 import { useSelector } from "hooks";
 import Head from "next/head";
 import Link from "next/link";
+import { memo } from "react";
 import { Choice, Question } from "types";
 
-export const QuestionView = ({
+export const QuestionView = memo(function QuestionView({
   question,
   inProcess,
   nextQuestionHandler,
@@ -13,7 +14,7 @@ export const QuestionView = ({
   inProcess: boolean;
   question: Question;
   nextQuestionHandler: (nextQuestionId: number, choice?: Choice) => void;
-}) => {
+}) {
   const { id, title, description, defaultNext, choices, responseKey } =
     question;
 
@@ -59,4 +60,4 @@ export const QuestionView = ({
       </div>
     </>
   );
-};
+});

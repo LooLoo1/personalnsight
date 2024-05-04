@@ -36,7 +36,11 @@ export default function Home() {
         </Description>
 
         {schema && <Button onClick={startTestHandler}>Start Now</Button>}
-        {!schema && <Button disabled>Loading...</Button>}
+        {!schema && (
+          <Button disabled className="animate-pulse">
+            Loading...
+          </Button>
+        )}
       </section>
     </Layout>
   );
