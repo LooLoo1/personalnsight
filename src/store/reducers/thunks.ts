@@ -1,7 +1,12 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getQuestionnaireSchema } from "api";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getQuestionnaireSchema, postQuestionnaireSchema } from 'api';
 
 export const fetchQuestionnaireSchema = createAsyncThunk(
-  "questionnaire/getQuestionnaireSchema",
+  'questionnaire/getQuestionnaireSchema',
   getQuestionnaireSchema,
+);
+
+export const postQuestionnaireAnswers = createAsyncThunk(
+  'questionnaire/postQuestionnaireAnswers',
+  postQuestionnaireSchema,
 );

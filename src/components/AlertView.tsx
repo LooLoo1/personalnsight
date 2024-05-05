@@ -1,43 +1,20 @@
-import { postQuestionnaireSchema } from 'api';
 import { Button, Description, Header, Title } from 'components';
-import { useDispatch, useSelector } from 'hooks';
+import { NextQuestionHandler } from 'hooks';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Fragment, memo } from 'react';
-import { clearAnswers, endSurvey } from 'store';
-import { Alert, Choice } from 'types';
+import { Alert } from 'types';
 
 export const AlertView = memo(function AlertView({
   inProcess,
   question,
-  nextQuestionHandler,
+  nextStepHandler,
 }: {
   inProcess: boolean;
   question: Alert;
-  nextQuestionHandler: (nextQuestionId: number, choice?: Choice) => void;
+  nextStepHandler: NextQuestionHandler;
 }) {
   const { defaultNext, structure } = question;
-  const dispatch = useDispatch();
-  const answers = useSelector(({ questionnaire }) => questionnaire.answers);
-
-  const handleSurveyCompletion = () => {
-    dispatch(endSurvey());
-    dispatch(clearAnswers());
-    postQuestionnaireSchema(answers);
-    localStorage.removeItem('questionnaire');
-  };
-
-  const finishHandler = (nextQuestionId: number | undefined, defaultNext: number | undefined) => {
-    const hasExplicitNextQuestion = nextQuestionId !== undefined;
-    const hasDefaultNextQuestion = defaultNext !== undefined;
-
-    if (hasExplicitNextQuestion || hasDefaultNextQuestion) {
-      const chosenNextQuestion = hasExplicitNextQuestion ? nextQuestionId : defaultNext;
-      nextQuestionHandler(chosenNextQuestion as number);
-    } else {
-      handleSurveyCompletion();
-    }
-  };
 
   return (
     <div className="w-full h-screen bg-gradient-purple">
@@ -64,11 +41,15 @@ export const AlertView = memo(function AlertView({
             );
           }
           if (element.type === 'Button') {
-            const { text, nextQuestionId, link } = element;
+            const { text, nextQuestionId } = element;
 
             return (
-              <Link key={text} href={link ?? `/questionnaire/${defaultNext}`}>
-                <Button state="alert" onClick={() => finishHandler(nextQuestionId, defaultNext)} disabled={!inProcess}>
+              <Link key={text} href={defaultNext ? `/questionnaire/${defaultNext}` : ''}>
+                <Button
+                  state="alert"
+                  onClick={() => nextStepHandler(nextQuestionId, defaultNext)}
+                  disabled={!inProcess}
+                >
                   {text}
                 </Button>
               </Link>
