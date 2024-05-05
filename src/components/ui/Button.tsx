@@ -1,6 +1,6 @@
-import { ComponentPropsWithoutRef } from "react";
-import { twMerge } from "tailwind-merge";
-import { ThemeState } from "types";
+import { ComponentPropsWithoutRef, memo } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { ThemeState } from 'types';
 
 const styles: Record<ThemeState, string> = {
   normal: `w-full text-base p-5 text-blackGray bg-lightGray rounded-2xl shadow-purple transition-all
@@ -12,14 +12,10 @@ const styles: Record<ThemeState, string> = {
   alert: `text-lg w-full p-5 text-purple bg-white rounded-2xl shadow-white transition-all hover:shadow-white2x focus-visible:shadow-white2x disabled:opacity-50`,
 };
 
-type ButtonProps = ComponentPropsWithoutRef<"button"> & {
+type ButtonProps = ComponentPropsWithoutRef<'button'> & {
   state?: ThemeState;
 };
 
-export const Button = ({
-  state = "normal",
-  className,
-  ...props
-}: ButtonProps) => (
-  <button className={twMerge(styles[state], className)} {...props} />
-);
+export const Button = memo(function Button({ state = 'normal', className, ...props }: ButtonProps) {
+  return <button className={twMerge(styles[state], className)} {...props} />;
+});

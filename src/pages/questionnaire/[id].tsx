@@ -1,26 +1,14 @@
-import { getQuestionnaireSchema } from "api";
-import { AlertView, QuestionView } from "components";
-import { isWindow } from "helpers";
-import { useDispatch, useIsWindow, useSelector } from "hooks";
-import type {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from "next";
-import { useRouter } from "next/router";
-import { useCallback } from "react";
-import { nextQuestion, setAnswer } from "store";
-import { Choice, QuestionsSchema } from "types";
+import { getQuestionnaireSchema } from 'api';
+import { AlertView, QuestionView } from 'components';
+import { useIsWindow, useQuestionsNavigation, useSelector } from 'hooks';
+import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import { useRouter } from 'next/router';
+import { QuestionsSchema } from 'types';
 
-const QuestionPage = ({
-  question,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { inProcess, questionNow } = useSelector(
-    ({ questionnaire }) => questionnaire,
-  );
-  const dispatch = useDispatch();
+const QuestionPage = ({ question }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { inProcess, questionNow } = useSelector(({ questionnaire }) => questionnaire);
   const router = useRouter();
-  const store = useSelector(({ questionnaire }) => questionnaire);
+  const { nextStepHandler } = useQuestionsNavigation();
 
   const { id, type } = question;
 
@@ -33,41 +21,15 @@ const QuestionPage = ({
     }
   });
 
-  const nextQuestionHandler = useCallback(
-    (nextQuestionId: number, choice?: Choice) => {
-      dispatch(nextQuestion(nextQuestionId));
-      if (choice) dispatch(setAnswer(choice));
-      if (isWindow()) {
-        localStorage.setItem(
-          "questionnaire",
-          JSON.stringify({ ...store, answers: [...store.answers, choice] }),
-        );
-      }
-    },
-    [dispatch, store],
-  );
-
-  if (type === "question") {
-    return (
-      <QuestionView
-        question={question}
-        inProcess={inProcess}
-        nextQuestionHandler={nextQuestionHandler}
-      />
-    );
+  if (type === 'question') {
+    return <QuestionView question={question} inProcess={inProcess} nextStepHandler={nextStepHandler} />;
   }
 
-  if (type === "alert") {
-    return (
-      <AlertView
-        question={question}
-        inProcess={inProcess}
-        nextQuestionHandler={nextQuestionHandler}
-      />
-    );
+  if (type === 'alert') {
+    return <AlertView question={question} inProcess={inProcess} nextStepHandler={nextStepHandler} />;
   }
 
-  throw new Error("Not existing question type");
+  throw new Error('Not existing question type');
 };
 
 export const getStaticPaths = (async () => {

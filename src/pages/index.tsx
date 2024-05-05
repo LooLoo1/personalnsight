@@ -1,15 +1,15 @@
-import { Button, Description, Title } from "components";
-import { useDispatch, useSelector } from "hooks";
-import { Layout } from "layouts";
-import { useRouter } from "next/router";
+import { Button, Description, Title } from 'components';
+import { useDispatch, useSelector } from 'hooks';
+import { Layout } from 'layouts';
+import { useRouter } from 'next/router';
 
-import { startSurvey } from "store";
+import { startSurvey } from 'store';
 
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { schema, inProcess, questionNow, sucsessQuestionnaire } = useSelector(
+  const { schema, error, inProcess, questionNow, sucsessQuestionnaire, isSurvey } = useSelector(
     ({ questionnaire }) => questionnaire,
   );
 
@@ -28,11 +28,9 @@ export default function Home() {
         <Title>Discover Your Relationship Astrology</Title>
 
         <Description>
-          Take our survey to uncover personalized insights into your
-          relationships based on astrology. We&apos;ll guide you through a
-          series of questions to tailor-make your astrological profile.
-          Understanding your astrological blueprint can revolutionize your
-          approach to relationships. Let&apos;s explore together!
+          Take our survey to uncover personalized insights into your relationships based on astrology. We&apos;ll guide
+          you through a series of questions to tailor-make your astrological profile. Understanding your astrological
+          blueprint can revolutionize your approach to relationships. Let&apos;s explore together!
         </Description>
 
         {schema && <Button onClick={startTestHandler}>Start Now</Button>}
@@ -41,6 +39,14 @@ export default function Home() {
             Loading...
           </Button>
         )}
+        {error && <Button disabled>Error: {error}</Button>}
+
+        {isSurvey === 'success' && (
+          <Description className="text-center ">You passed the test successfully. Thank you for your time!</Description>
+        )}
+
+        {isSurvey === 'error' && error && <Description className="text-center color-red-500">{error}</Description>}
+        {isSurvey === 'sending' && <Description className="text-center">Sending...</Description>}
       </section>
     </Layout>
   );

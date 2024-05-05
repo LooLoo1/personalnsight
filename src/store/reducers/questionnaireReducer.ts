@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Choice, QuestionsSchema } from "types";
-import { fetchQuestionnaireSchema } from "./thunks";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Choice, QuestionsSchema } from 'types';
+import { fetchQuestionnaireSchema, postQuestionnaireAnswers } from './thunks';
 
 export type InitialState = {
   inProcess: boolean;
@@ -10,6 +10,7 @@ export type InitialState = {
   error: string | undefined;
   schema: QuestionsSchema[] | undefined;
   answers: Choice[];
+  isSurvey: 'sending' | 'success' | 'error' | undefined;
 };
 
 const initialState: InitialState = {
@@ -20,23 +21,23 @@ const initialState: InitialState = {
   error: undefined,
   schema: undefined,
   answers: [],
+  isSurvey: undefined,
 };
 
 const questionnaireSlice = createSlice({
-  name: "questionnaire",
+  name: 'questionnaire',
   initialState,
   reducers: {
     startSurvey(state) {
       if (state.schema!.length > 0) {
         state.inProcess = true;
+        state.isSurvey = undefined;
         state.questionNow = state.schema![0].id;
       }
     },
     endSurvey(state) {
       state.inProcess = false;
       state.questionNow = undefined;
-      state.sucsessQuestionnaire = true;
-      state.answers = [];
     },
 
     setInProgressData(state, action: PayloadAction<InitialState>) {
@@ -52,8 +53,7 @@ const questionnaireSlice = createSlice({
 
     backToPreviousQuestion(state) {
       if (state.answers.length > 0) {
-        const questionId =
-          state.answers[state.answers.length - 1].id || undefined;
+        const questionId = state.answers[state.answers.length - 1].id || undefined;
         if (questionId) {
           state.questionNow = questionId;
           state.answers.pop();
@@ -86,6 +86,18 @@ const questionnaireSlice = createSlice({
       })
       .addCase(fetchQuestionnaireSchema.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(postQuestionnaireAnswers.pending, (state) => {
+        state.isSurvey = 'sending';
+      })
+      .addCase(postQuestionnaireAnswers.fulfilled, (state, action) => {
+        state.isSurvey = 'success';
+        state.sucsessQuestionnaire = true;
+        state.answers = [];
+      })
+      .addCase(postQuestionnaireAnswers.rejected, (state, action) => {
+        state.isSurvey = 'error';
         state.error = action.error.message;
       });
   },
