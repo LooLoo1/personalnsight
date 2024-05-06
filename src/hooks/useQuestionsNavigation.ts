@@ -1,6 +1,6 @@
-import { isWindow } from 'helpers';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { clearAnswers, endSurvey, nextQuestion, postQuestionnaireAnswers, setAnswer } from 'store';
+import { clearAnswers, endSurvey, nextQuestion, postQuestionnaireAnswers, setAnswer, startSurvey } from 'store';
 import { Choice } from 'types';
 import { useDispatch, useSelector } from './useRedux';
 
@@ -11,9 +11,11 @@ export type NextQuestionHandler = (
 ) => void;
 
 export const useQuestionsNavigation = () => {
-  const answers = useSelector(({ questionnaire }) => questionnaire.answers);
   const store = useSelector(({ questionnaire }) => questionnaire);
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { schema, questionNow, answers } = store;
 
   const nextQuestionHandler = useCallback(
     (nextQuestionId: number | undefined) => {
@@ -28,31 +30,32 @@ export const useQuestionsNavigation = () => {
       await dispatch(postQuestionnaireAnswers(answerList));
       dispatch(endSurvey());
       dispatch(clearAnswers());
-      localStorage.removeItem('questionnaire');
     },
     [dispatch, answers],
   );
 
   const nextStepHandler = useCallback(
     async (nextQuestionId: number | undefined, defaultNext: number | undefined, choice?: Choice) => {
-      if (choice) {
-        dispatch(setAnswer(choice));
-        if (isWindow()) {
-          localStorage.setItem('questionnaire', JSON.stringify({ ...store, answers: [...store.answers, choice] }));
-        }
-      }
-
       if (nextQuestionId !== undefined || defaultNext !== undefined) {
         const chosenNextQuestion = nextQuestionId !== undefined ? nextQuestionId : defaultNext;
         nextQuestionHandler(chosenNextQuestion);
       } else {
         handleSurveyCompletion(choice);
       }
+      if (choice) {
+        dispatch(setAnswer(choice));
+      }
     },
-    [handleSurveyCompletion, nextQuestionHandler, dispatch, store],
+    [handleSurveyCompletion, nextQuestionHandler, dispatch],
   );
+
+  const startTestHandler = () => {
+    dispatch(startSurvey());
+    router.push(`/questionnaire/${questionNow || schema![0].id}`);
+  };
 
   return {
     nextStepHandler,
+    startTestHandler,
   };
 };

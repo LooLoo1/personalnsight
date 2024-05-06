@@ -3,10 +3,11 @@ import { AlertView, QuestionView } from 'components';
 import { useIsWindow, useQuestionsNavigation, useSelector } from 'hooks';
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
+import { questionnaireSelector } from 'store';
 import { QuestionsSchema } from 'types';
 
 const QuestionPage = ({ question }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { inProcess, questionNow } = useSelector(({ questionnaire }) => questionnaire);
+  const { inProcess, questionNow, schema } = useSelector(({ questionnaire }) => questionnaire);
   const router = useRouter();
   const { nextStepHandler } = useQuestionsNavigation();
 
@@ -16,7 +17,7 @@ const QuestionPage = ({ question }: InferGetStaticPropsType<typeof getStaticProp
     if (inProcess && id !== questionNow) {
       router.push(`/questionnaire/${questionNow}`);
     }
-    if (!inProcess) {
+    if (!inProcess && schema) {
       router.push(`/`);
     }
   });
