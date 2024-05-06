@@ -55,9 +55,6 @@ const questionnaireSlice = createSlice({
     },
 
     backToPreviousQuestion(state) {
-      // if (!state.answers) {
-
-      // }
       if (state.answers.length === 0) {
         state.questionNow = undefined;
         state.inProcess = false;
