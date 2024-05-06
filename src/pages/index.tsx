@@ -1,13 +1,11 @@
 import { Button, Description, Title } from 'components';
-import { useDispatch, useSelector } from 'hooks';
+import { useQuestionsNavigation, useSelector } from 'hooks';
 import { Layout } from 'layouts';
 import { useRouter } from 'next/router';
 
-import { startSurvey } from 'store';
-
 export default function Home() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const { startTestHandler } = useQuestionsNavigation();
 
   const { schema, error, inProcess, questionNow, sucsessQuestionnaire, isSurvey } = useSelector(
     ({ questionnaire }) => questionnaire,
@@ -17,14 +15,9 @@ export default function Home() {
     router.replace(`/questionnaire/${questionNow}`);
   }
 
-  const startTestHandler = () => {
-    dispatch(startSurvey());
-    router.push(`/questionnaire/${questionNow || schema![0].id}`);
-  };
-
   return (
     <Layout>
-      <section className="flex max-w-96 w-full h-full my-5 flex-col lg:p-2 p-5 mx-auto gap-8 group alert">
+      <section className="flex max-w-96 w-full my-5 flex-col lg:p-2 p-5 mx-auto gap-8 group alert">
         <Title>Discover Your Relationship Astrology</Title>
 
         <Description>
@@ -33,19 +26,16 @@ export default function Home() {
           blueprint can revolutionize your approach to relationships. Let&apos;s explore together!
         </Description>
 
-        {schema && <Button onClick={startTestHandler}>Start Now</Button>}
+        {schema && <Button onClick={startTestHandler}>Start Now{isSurvey === 'success' && ', again?'}</Button>}
         {!schema && (
           <Button disabled className="animate-pulse">
             Loading...
           </Button>
         )}
-        {error && <Button disabled>Error: {error}</Button>}
-
         {isSurvey === 'success' && (
-          <Description className="text-center ">You passed the test successfully. Thank you for your time!</Description>
+          <Description className="text-center">You passed the test successfully. Thank you for your time!</Description>
         )}
-
-        {isSurvey === 'error' && error && <Description className="text-center color-red-500">{error}</Description>}
+        {isSurvey === 'error' || (error && <Description className="text-center color-red-500">{error}</Description>)}
         {isSurvey === 'sending' && <Description className="text-center">Sending...</Description>}
       </section>
     </Layout>

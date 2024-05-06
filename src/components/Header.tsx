@@ -7,12 +7,10 @@ import { backToPreviousQuestion } from 'store';
 import { twMerge } from 'tailwind-merge';
 
 export const Header = ({ className }: ComponentPropsWithoutRef<'header'>) => {
-  const inProcess = useSelector(({ questionnaire }) => questionnaire.inProcess);
-  const { answers } = useSelector(({ questionnaire }) => questionnaire);
+  const { inProcess } = useSelector(({ questionnaire }) => questionnaire);
   const dispatch = useDispatch();
 
   const backStepHandler = () => {
-    console.log(answers);
     dispatch(backToPreviousQuestion());
   };
 

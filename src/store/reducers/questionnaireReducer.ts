@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice, current } from '@reduxjs/toolkit';
 import { Choice, QuestionsSchema } from 'types';
 import { fetchQuestionnaireSchema, postQuestionnaireAnswers } from './thunks';
 
@@ -33,6 +33,7 @@ const questionnaireSlice = createSlice({
         state.inProcess = true;
         state.isSurvey = undefined;
         state.questionNow = state.schema![0].id;
+        localStorage.setItem('questionnaire', JSON.stringify({ ...current(state) }));
       }
     },
     endSurvey(state) {
@@ -41,28 +42,40 @@ const questionnaireSlice = createSlice({
     },
 
     setInProgressData(state, action: PayloadAction<InitialState>) {
-      state = action.payload;
+      return action.payload;
     },
     nextQuestion(state, action: PayloadAction<number | undefined>) {
       state.questionNow = action.payload;
     },
 
     setAnswer(state, action: PayloadAction<Choice>) {
+      const store = current(state);
+      localStorage.setItem('questionnaire', JSON.stringify({ ...store, answers: [...store.answers, action.payload] }));
       state.answers.push(action.payload);
     },
 
     backToPreviousQuestion(state) {
+      // if (!state.answers) {
+
+      // }
+      if (state.answers.length === 0) {
+        state.questionNow = undefined;
+        state.inProcess = false;
+        state.answers = [];
+        const store = current(state);
+        localStorage.setItem('questionnaire', JSON.stringify({ ...store }));
+        return;
+      }
       if (state.answers.length > 0) {
         const questionId = state.answers[state.answers.length - 1].id || undefined;
         if (questionId) {
           state.questionNow = questionId;
           state.answers.pop();
+          const store = current(state);
+          localStorage.setItem('questionnaire', JSON.stringify({ ...store }));
         }
         return;
       }
-      state.questionNow = undefined;
-      state.inProcess = false;
-      state.answers = [];
     },
 
     clearAnswers(state) {
@@ -73,6 +86,7 @@ const questionnaireSlice = createSlice({
         loading: false,
         answers: [],
       };
+      localStorage.removeItem('questionnaire');
     },
   },
   extraReducers: (builder) => {

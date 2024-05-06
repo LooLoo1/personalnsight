@@ -27,7 +27,7 @@ export const QuestionView = memo(function QuestionView({
       </Head>
       <div className="w-full h-full">
         <Header />
-        <section className={`flex max-w-96 w-full h-full my-5 flex-col lg:p-2 p-5 mx-auto gap-8 last:pb-16`}>
+        <section className={`flex max-w-96 w-full my-5 flex-col lg:p-2 p-5 mx-auto gap-8 last:pb-16`}>
           <Title>{addressing}</Title>
 
           {description && <Description>{description}</Description>}

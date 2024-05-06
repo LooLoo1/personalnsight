@@ -11,6 +11,7 @@ export const postQuestionnaireSchema = async (requestData: Choice[]): Promise<Ch
     });
     const data = await res.json();
     return data;
+    // return requestData;
   } catch (error) {
     throw new Error('Failed to post questionnaire schema');
   }
