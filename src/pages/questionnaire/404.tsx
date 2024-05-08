@@ -1,12 +1,12 @@
-import { useIsWindow } from "hooks";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
+import { useIsWindow } from 'hooks'
 
 const QuestionnaireNotFoundPage = () => {
   const router = useRouter();
 
   useIsWindow(() => {
     setTimeout(() => {
-      router.push("/");
+      router.push('/');
     }, 0);
   });
   return <></>;

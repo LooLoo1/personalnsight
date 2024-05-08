@@ -1,4 +1,4 @@
-import { Choice } from 'types';
+import { Choice } from 'types'
 
 export const postQuestionnaireSchema = async (requestData: Choice[]): Promise<Choice[]> => {
   try {

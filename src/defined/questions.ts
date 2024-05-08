@@ -210,6 +210,7 @@ export const QUESTIONS: QuestionsSchema[] = [
     id: 6,
     defaultNext: 7,
     type: 'alert',
+    responseKey: 'how_does_it_work',
     structure: [
       {
         type: 'Title',

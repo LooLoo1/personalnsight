@@ -38,6 +38,7 @@ export type AlertStructure = (Element | Button)[];
 export type Alert = {
   id: number;
   type: 'alert';
+  responseKey: string;
   defaultNext?: number;
   structure: AlertStructure;
 };

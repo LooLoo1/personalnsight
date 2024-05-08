@@ -1,21 +1,23 @@
-import { PayloadAction, createSlice, current } from '@reduxjs/toolkit';
-import { Choice, QuestionsSchema } from 'types';
-import { fetchQuestionnaireSchema, postQuestionnaireAnswers } from './thunks';
+import { Choice, QuestionsSchema } from 'types'
+
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
+
+import { fetchQuestionnaireSchema, postQuestionnaireAnswers } from './thunks'
 
 export type InitialState = {
   inProcess: boolean;
-  sucsessQuestionnaire: boolean;
-  questionNow: number | string | undefined;
+  questionnaireSuccess: boolean;
+  questionNow?: number;
   loading: boolean;
-  error: string | undefined;
-  schema: QuestionsSchema[] | undefined;
+  error?: string;
+  schema?: QuestionsSchema[];
   answers: Choice[];
-  isSurvey: 'sending' | 'success' | 'error' | undefined;
+  isSurvey?: 'sending' | 'success' | 'error';
 };
 
 const initialState: InitialState = {
   inProcess: false,
-  sucsessQuestionnaire: false,
+  questionnaireSuccess: false,
   questionNow: undefined,
   loading: false,
   error: undefined,
@@ -104,7 +106,7 @@ const questionnaireSlice = createSlice({
       })
       .addCase(postQuestionnaireAnswers.fulfilled, (state, action) => {
         state.isSurvey = 'success';
-        state.sucsessQuestionnaire = true;
+        state.questionnaireSuccess = true;
         state.answers = [];
       })
       .addCase(postQuestionnaireAnswers.rejected, (state, action) => {

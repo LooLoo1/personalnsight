@@ -1,10 +1,10 @@
-import { Button, Description, Header, Title } from 'components';
-import { replaceTitle } from 'helpers';
-import { NextQuestionHandler, useSelector } from 'hooks';
-import Head from 'next/head';
-import Link from 'next/link';
-import { memo } from 'react';
-import { Question } from 'types';
+import { memo } from 'react'
+import Head from "next/head"
+import Link from 'next/link'
+import { Button, Description, Header, Title } from 'components'
+import { composeQuestionnairePath, personalizeQuestionTitle } from 'helpers'
+import { NextQuestionHandler, useSelector } from 'hooks'
+import { Question } from 'types'
 
 export const QuestionView = memo(function QuestionView({
   question,
@@ -17,8 +17,8 @@ export const QuestionView = memo(function QuestionView({
 }) {
   const { id, title, description, defaultNext, choices, responseKey } = question;
 
-  const answers = useSelector(({ questionnaire }) => questionnaire.answers);
-  const addressing = replaceTitle(title, answers);
+  const { schema, answers } = useSelector(({ questionnaire }) => questionnaire);
+  const addressing = title.includes('{') && title.includes('}') ? personalizeQuestionTitle(title, answers) : title;
 
   return (
     <>
@@ -36,7 +36,11 @@ export const QuestionView = memo(function QuestionView({
             {choices.map(({ text, nextQuestionId, value, template }) => (
               <Link
                 key={text}
-                href={!nextQuestionId && !defaultNext ? `/` : `/questionnaire/${nextQuestionId || defaultNext}`}
+                href={
+                  !nextQuestionId && !defaultNext
+                    ? `/`
+                    : `/questionnaire/${composeQuestionnairePath(schema!, nextQuestionId || defaultNext, nextQuestionId || defaultNext)}`
+                }
               >
                 <Button
                   onClick={() => {

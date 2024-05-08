@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'hooks';
+import { ComponentPropsWithoutRef } from 'react';
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'hooks';
 import Arrow from 'public/svg/Arrow.svg';
 import Logo from 'public/svg/Logo.svg';
-import { ComponentPropsWithoutRef } from 'react';
 import { backToPreviousQuestion } from 'store';
 import { twMerge } from 'tailwind-merge';
 

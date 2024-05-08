@@ -1,2 +1,2 @@
-export * from "./getQuestionnaireSchema";
-export * from "./postQuestionnaireSchema";
+export * from './getQuestionnaireSchema'
+export * from './postQuestionnaireSchema'

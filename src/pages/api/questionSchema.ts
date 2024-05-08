@@ -1,6 +1,6 @@
-import { QUESTIONS } from "defined";
-import { NextApiRequest, NextApiResponse } from "next";
-import type { Choice, QuestionsSchema } from "types";
+import { NextApiRequest, NextApiResponse } from 'next'
+import { QUESTIONS } from 'defined'
+import type { Choice, QuestionsSchema } from 'types'
 
 type ErrorMessage = {
   message: string;
@@ -13,10 +13,7 @@ const Model = {
 };
 
 const Controller = {
-  async handleGET(
-    req: NextApiRequest,
-    res: NextApiResponse<QuestionsSchema[]>,
-  ) {
+  async handleGET(req: NextApiRequest, res: NextApiResponse<QuestionsSchema[]>) {
     res.status(200).json(QUESTIONS);
   },
 
@@ -33,12 +30,12 @@ export default function handler(
 ) {
   const method = req.method;
 
-  if (method === "GET") {
+  if (method === 'GET') {
     return Controller.handleGET(req, res as NextApiResponse<QuestionsSchema[]>);
   }
-  if (method === "POST") {
+  if (method === 'POST') {
     return Controller.handlePOST(req, res as NextApiResponse<Choice[]>);
   }
 
-  res.status(405).json({ message: "The method is not supported" });
+  res.status(405).json({ message: 'The method is not supported' });
 }

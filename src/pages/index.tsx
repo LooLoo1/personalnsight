@@ -1,18 +1,20 @@
-import { Button, Description, Title } from 'components';
-import { useQuestionsNavigation, useSelector } from 'hooks';
-import { Layout } from 'layouts';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
+import { Button, Description, Title } from 'components'
+import { composeQuestionnairePath } from 'helpers'
+import { useQuestionsNavigation, useSelector } from 'hooks'
+import { Layout } from 'layouts'
 
 export default function Home() {
   const router = useRouter();
   const { startTestHandler } = useQuestionsNavigation();
 
-  const { schema, error, inProcess, questionNow, sucsessQuestionnaire, isSurvey } = useSelector(
+  const { schema, error, inProcess, questionNow, questionnaireSuccess, isSurvey } = useSelector(
     ({ questionnaire }) => questionnaire,
   );
 
-  if (inProcess && !sucsessQuestionnaire) {
-    router.replace(`/questionnaire/${questionNow}`);
+  if (inProcess && !questionnaireSuccess) {
+    const path = composeQuestionnairePath(schema!, questionNow, questionNow);
+    path && router.replace(`/questionnaire/${path}`);
   }
 
   return (

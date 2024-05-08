@@ -1,13 +1,13 @@
-import { Header, Title } from "components";
-import { useIsWindow } from "hooks";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
+import { Header, Title } from 'components'
+import { useIsWindow } from 'hooks'
 
 const QuestionnairePage = () => {
   const router = useRouter();
 
   useIsWindow(() => {
     setTimeout(() => {
-      router.push("/");
+      router.push('/');
     }, 2000);
   });
 

@@ -1,1 +1,1 @@
-export type ThemeState = "alert" | "normal";
+export type ThemeState = 'alert' | 'normal';

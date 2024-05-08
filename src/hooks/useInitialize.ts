@@ -1,12 +1,12 @@
-import { isWindow } from 'helpers';
-import { useDispatch, useSelector } from 'hooks';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { fetchQuestionnaireSchema, setInProgressData } from 'store';
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { composeQuestionnairePath, isWindow } from 'helpers'
+import { useDispatch, useSelector } from 'hooks'
+import { fetchQuestionnaireSchema, setInProgressData } from 'store'
 
 export const useInitialize = () => {
   const dispatch = useDispatch();
-  const { inProcess, questionNow } = useSelector(({ questionnaire }) => questionnaire);
+  const { inProcess, questionNow, schema } = useSelector(({ questionnaire }) => questionnaire);
   const router = useRouter();
   const [initialized, setInitialized] = useState(false);
 
@@ -24,9 +24,10 @@ export const useInitialize = () => {
         const parseData = JSON.parse(data);
         if (questionNow !== parseData.questionNow) {
           dispatch(setInProgressData(parseData));
-          router.replace(`/questionnaire/${parseData.questionNow}`);
+          const path = composeQuestionnairePath(schema!, questionNow, parseData.questionNow);
+          path && router.replace(`/questionnaire/${path}`);
         }
       }
     }
-  }, [dispatch, inProcess, initialized, questionNow, router]);
+  }, [dispatch, inProcess, initialized, questionNow, router, schema]);
 };

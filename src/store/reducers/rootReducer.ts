@@ -1,6 +1,6 @@
-import questionnaireReducer from "./questionnaireReducer";
+import { combineReducers } from 'redux'
 
-import { combineReducers } from "redux";
+import questionnaireReducer from './questionnaireReducer'
 
 export const rootReducer = combineReducers({
   questionnaire: questionnaireReducer,
