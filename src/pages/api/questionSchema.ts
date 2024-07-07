@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { QUESTIONS } from 'defined'
+import { QUESTIONS } from 'package'
 import type { Choice, QuestionsSchema } from 'types'
 
 type ErrorMessage = {

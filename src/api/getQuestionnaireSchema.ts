@@ -1,4 +1,4 @@
-import { QUESTIONS } from 'defined'
+import { QUESTIONS } from 'package'
 import { QuestionsSchema } from 'types'
 
 export const getQuestionnaireSchema = async (): Promise<QuestionsSchema[]> => {
