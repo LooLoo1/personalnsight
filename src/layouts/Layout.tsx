@@ -1,5 +1,6 @@
-import { ComponentPropsWithoutRef } from 'react'
 import { Header } from 'components'
+import Script from "next/script"
+import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 type LayoutProps = ComponentPropsWithoutRef<'div'> & {
